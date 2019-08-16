@@ -26,5 +26,5 @@ android {
 dependencies {
     implementation project(':mysdk')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.facebook.react:react-native:0.59.8"
+    implementation "com.facebook.react:react-native:+"
 }
