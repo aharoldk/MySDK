@@ -46,5 +46,7 @@ project.afterEvaluate {
     preBuild.dependsOn copyLibs
 }
 
+apply from: 'publish.gradle'
+
 //preBuild.dependsOn copyLibs
 //clean.mustRunAfter copyLibs
