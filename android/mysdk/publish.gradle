@@ -1,24 +1,21 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '1.0' // your library version
-group 'com.aharoldk' // whatever group name you'd like
+version '1.0.4'
+group 'com.aharoldk'
 
 publishing {
     publications {
         Production(MavenPublication) {
-            artifact("build/outputs/aar/mysdk-release.aar") // replace with your library name
+            artifact("build/outputs/aar/mysdk-release.aar")
             groupId this.group
-            artifactId 'mysdk' // replace with your library artifact id
+            artifactId 'mysdk'
             version this.version
 
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
 
-                // Iterate over the implementation dependencies (we don't want the test ones),
-                // adding a <dependency> node for each
                 configurations.implementation.allDependencies.each {
-                    // Ensure dependencies such as fileTree are not included in the pom.
                     if (it.name != 'unspecified') {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', it.group)
@@ -36,15 +33,12 @@ bintray {
     key = '5d494f28d30aa7bb0ca5c7fa54b64e9e5423123a'
     publications = ['Production']
     configurations = ['archives']
-    // Default: false. Whether to run this as dry-run, without deploying
     dryRun = false
-    // Default: false. Whether to override version artifacts already published
     override = false
-    // Default: false. Whether version should be auto published after an upload
     publish = true
     pkg {
-        repo = 'MySDK' // the name of the repository you created on Bintray
-        name = 'com.aharoldk.mysdk' // the name of the package you created inside it
+        repo = 'MySDK'
+        name = 'com.aharoldk.mysdk'
         version {
             name = this.version
             released = new Date()
