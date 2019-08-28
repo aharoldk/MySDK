@@ -1,8 +1,14 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '1.0.4'
+version '1.0.5'
 group 'com.aharoldk'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def userBintray = properties.getProperty('user.bintray')
+def passwordBintray = properties.getProperty('password.bintray')
 
 publishing {
     publications {
@@ -29,8 +35,8 @@ publishing {
 }
 
 bintray {
-    user = 'aharoldk'
-    key = '5d494f28d30aa7bb0ca5c7fa54b64e9e5423123a'
+    user = userBintray
+    key = passwordBintray
     publications = ['Production']
     configurations = ['archives']
     dryRun = false
