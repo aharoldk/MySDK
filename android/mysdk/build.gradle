@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.1"
 
 
     defaultConfig {
@@ -21,32 +21,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    configurations.api.setCanBeResolved(true)
-    configurations.implementation.setCanBeResolved(true)
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.facebook.react:react-native:0.59.3'
     implementation 'androidx.appcompat:appcompat:1.0.2'
-}
-
-task copyLibs(type: Copy) {
-    from configurations.implementation
-    into 'build/lib'
-}
-
-task cleanTempDir(type: Delete) {
-    delete fileTree(dir: "libs", exclude: "*.jar")
-}
-
-project.afterEvaluate {
-    preBuild.dependsOn copyLibs
+    implementation group: 'com.github.fangasvsass', name: 'react-native', version: '0.53.6'
 }
 
 apply from: 'publish.gradle'
-
-//preBuild.dependsOn copyLibs
-//clean.mustRunAfter copyLibs
